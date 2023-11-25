@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
 const MatchSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    trim: true,
-  },
-  opponent1: String,
-  opponent2: String,
-  points: Number,
+  players: [{ 
+    type: String, 
+    required: true }],
+  result: { 
+    type: String, 
+    required: true },
   created: {
     type: Date,
     default: Date.now,

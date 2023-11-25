@@ -30,6 +30,7 @@ const styles = {
 export default function RPSMenu() {
   const navigate = useNavigate();
   const location = useLocation();
+  const loggedInUser = auth.isAuthenticated() ? auth.isAuthenticated().user : null;
 
   return (
     <AppBar position="static" style={styles.appBar}>
@@ -44,34 +45,51 @@ export default function RPSMenu() {
           </IconButton>
         </Link>
         <div style={{ marginLeft: 'auto', marginRight: 0 }}>
-        <Link to="/users">
-          <Button style={isActive(location, '/users')}>Users</Button>
-        </Link>
-        {
-        !auth.isAuthenticated() && (<span>
-          <Link to="/signup">
-            <Button style={isActive(location, "/signup")}>Sign up
-            </Button>
+          <Link to="/users">
+            <Button style={isActive(location, '/users')}>Users</Button>
           </Link>
-          <Link to="/signin">
-            <Button style={isActive(location, "/signin")}>Sign In
-            </Button>
+          {
+            !auth.isAuthenticated() && (<span>
+              <Link to="/signup">
+                <Button style={isActive(location, "/signup")}>Sign up
+                </Button>
+              </Link>
+              <Link to="/signin">
+                <Button style={isActive(location, "/signin")}>Sign In
+                </Button>
+              </Link>
+            </span>)
+          }
+
+
+          <Link to="/rank">
+            <Button style={isActive(location, '/rank')}>Rank</Button>
           </Link>
-        </span>)
-      }
-        <Link to="/addMatch">
-          <Button style={isActive(location, '/match')}>Match</Button>
-        </Link>
-        <Link to="/rank">
-          <Button style={isActive(location, '/rank')}>Rank</Button>
-        </Link>
         </div>
         {auth.isAuthenticated() && (
           <span>
+            {/* I wanted to show the name of the user in the menu [..Jorge]
+            <Typography variant="h6" color="inherit" style={{ marginRight: '10px' }}>
+              {`Hello, ${loggedInUser.name}`}
+            </Typography>*/}
             <Link to={`/user/${auth.isAuthenticated().user._id}`}>
               <Button style={isActive(location, `/user/${auth.isAuthenticated().user._id}`)}>My Profile</Button>
             </Link>
-            <Button color="inherit" onClick={() => auth.clearJWT(() => navigate('/'))}>
+            <Link to={`/user/${auth.isAuthenticated().user._id}`}>
+              <Button style={isActive(location, `/user/${auth.isAuthenticated().user._id}`)}>{`Hello, ${loggedInUser.name}`}</Button>
+            </Link>
+            <Link to="/addMatch">
+              <Button style={isActive(location, '/match')}>Match</Button>
+            </Link>
+            <Button color="inherit" onClick={() => auth.clearJWT(() => {
+              // Reload the page if the user is on the homepage
+              if (window.location.pathname === '/') {
+                window.location.reload();
+              } else {
+                // Navigate to the home page if the user is on another page
+                navigate('/');
+              }
+            })}>
               Sign out
             </Button>
           </span>

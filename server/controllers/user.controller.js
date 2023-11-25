@@ -43,7 +43,11 @@ const userByID = async (req, res, next, id) => {
 const read = (req, res) => {
   req.profile.hashed_password = undefined;
   req.profile.salt = undefined;
-  return res.json(req.profile);
+  return res.json({
+    ...req.profile._doc,
+    rps: req.profile.rps,
+    elo: req.profile.elo,
+  });
 };
 
 const update = async (req, res) => {

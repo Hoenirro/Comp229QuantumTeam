@@ -6,7 +6,11 @@ const create = async (user) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify({
+        ...user,
+        rps: user.rps || "errorValue",
+        elo: user.elo || 1200,
+      }),
     });
     return await response.json();
   } catch (err) {
@@ -20,6 +24,7 @@ const list = async (signal) => {
 
       signal: signal,
     });
+    console.log(response);
     return await response.json();
   } catch (err) {
     console.log(err);

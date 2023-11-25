@@ -62,7 +62,12 @@ export default function Signup() {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  // this was also giving weird warnings, a solution on the web
+  // was to check first if it was being called first [..Jorge]
   const handleClose = () => {
+    if (handleClose) {
+      handleClose();
+    }
     setOpen(false);
   };
 
@@ -72,6 +77,7 @@ export default function Signup() {
       email: values.email || undefined,
       password: values.password || undefined,
       rps: values.rps || undefined,
+      elo: values.elo || undefined,
     };
 
     create(user).then((data) => {
@@ -81,11 +87,6 @@ export default function Signup() {
         setOpen(true);
       }
     });
-  };
-
-  Signup.propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired,
   };
 
   return (
@@ -172,3 +173,8 @@ export default function Signup() {
     </div>
   );
 }
+
+Signup.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func, // Made it optional to receive less warnings [..Jorge]
+};

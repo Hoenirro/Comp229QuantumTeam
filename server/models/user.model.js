@@ -26,6 +26,15 @@ const UserSchema = new mongoose.Schema({
     required: "Password is required",
   },
   salt: String,
+  // I included the rps and the elo values [..Jorge]
+  rps: {
+    type: String,
+    required: "Rock-paper-scissor is required"
+  },
+  elo: {
+    type: Number,
+    default: 0,
+  },
 });
 UserSchema.virtual("password")
   .set(function (password) {

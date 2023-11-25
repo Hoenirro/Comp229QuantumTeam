@@ -23,6 +23,12 @@ const auth = {
     signout().then((data) => {
       document.cookie = "t=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
     })
+  },
+  getCredentials() {
+    const jwtToken = sessionStorage.getItem('jwt');
+    return {
+      t: jwtToken,
+    };
   }
 }
 

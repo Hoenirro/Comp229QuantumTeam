@@ -13,7 +13,8 @@ import PrivateRoute from "./lib/PrivateRoute.jsx";
 import EditProfile from "./user/EditProfile.jsx";
 import Menu from "./core/Menu";
 import AddItem from "./item/AddItem.jsx";
-import AddMatch from"./match/Addmatch.jsx";
+import AddMatch from"./match/MatchJtesting.jsx";
+//import AddMatch from"./match/Addmatch.jsx";
 
 function MainRouter() {
   return (

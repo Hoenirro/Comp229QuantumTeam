@@ -3,8 +3,9 @@ import errorHandler from "./error.controller.js";
 
 const create = async (req, res) => {
     try {
-        console.log(req.body);
+        //console.log('Request Body:', req.body);
         const match = new Match(req.body);
+        console.log('Match Object:', match);
         await match.save();
         return res.status(200).json({
             message: "Match created successfully!",
@@ -19,8 +20,8 @@ const create = async (req, res) => {
 
 const list = async (req, res) => {
     try {
-        let matches = await Match.find();
-        res.json(matches);
+        let matches = await Match.find().sort({ createdAt: -1 });
+        return res.json(matches);
     }
     catch (err) {
         res.status(400).json({
